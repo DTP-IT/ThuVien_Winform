@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="QuanLyThuVien" Class="QuanLyThuVienDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-LH8DQNE\SQLEXPRESS;Initial Catalog=QuanLyThuVien;Integrated Security=True" SettingsObjectName="QL_thu_vien.Properties.Settings" SettingsPropertyName="QuanLyThuVienConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.tbl_can_bo_thu_vien" Member="tbl_can_bo_thu_viens">
+    <Type Name="tbl_can_bo_thu_vien">
+      <Column Name="maCanBo" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="tenCanBo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="gioiTinh" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="namSinh" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="diaChi" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="phone" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="email" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="quenHan" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="matKhau" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="tbl_can_bo_thu_vien_tbl_chi_tiet_muon" Member="tbl_chi_tiet_muons" ThisKey="maCanBo" OtherKey="maSach" Type="tbl_chi_tiet_muon" />
+      <Association Name="tbl_can_bo_thu_vien_tbl_chi_tiet_tra" Member="tbl_chi_tiet_tras" ThisKey="maCanBo" OtherKey="muon_tra_id" Type="tbl_chi_tiet_tra" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbl_the_loai_sach" Member="tbl_the_loai_saches">
+    <Type Name="tbl_the_loai_sach">
+      <Column Name="maTheLoai" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="tenTheLoai" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ghiChu" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Association Name="tbl_the_loai_sach_tbl_sach" Member="tbl_saches" ThisKey="maTheLoai" OtherKey="maTheLoai" Type="tbl_sach" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbl_chi_tiet_muon" Member="tbl_chi_tiet_muons">
+    <Type Name="tbl_chi_tiet_muon">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="muon_tra_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="maSach" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="maCanBo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ngayMuon" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ngayPhaiTra" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="tinhTrangMuon" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="ghiChu" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Association Name="tbl_can_bo_thu_vien_tbl_chi_tiet_muon" Member="tbl_can_bo_thu_vien" ThisKey="maSach" OtherKey="maCanBo" Type="tbl_can_bo_thu_vien" IsForeignKey="true" />
+      <Association Name="tbl_muon_tra_tbl_chi_tiet_muon" Member="tbl_muon_tra" ThisKey="maCanBo" OtherKey="ID" Type="tbl_muon_tra" IsForeignKey="true" />
+      <Association Name="tbl_sach_tbl_chi_tiet_muon" Member="tbl_sach" ThisKey="maSach" OtherKey="maSach" Type="tbl_sach" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbl_chi_tiet_tra" Member="tbl_chi_tiet_tras">
+    <Type Name="tbl_chi_tiet_tra">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="muon_tra_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="maSach" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="maCanBo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ngayTra" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="tinhTrangTra" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="thanhToan" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="ghiChu" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Association Name="tbl_can_bo_thu_vien_tbl_chi_tiet_tra" Member="tbl_can_bo_thu_vien" ThisKey="muon_tra_id" OtherKey="maCanBo" Type="tbl_can_bo_thu_vien" IsForeignKey="true" />
+      <Association Name="tbl_muon_tra_tbl_chi_tiet_tra" Member="tbl_muon_tra" ThisKey="maCanBo" OtherKey="ID" Type="tbl_muon_tra" IsForeignKey="true" />
+      <Association Name="tbl_sach_tbl_chi_tiet_tra" Member="tbl_sach" ThisKey="maSach" OtherKey="maSach" Type="tbl_sach" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbl_doc_gia" Member="tbl_doc_gias">
+    <Type Name="tbl_doc_gia">
+      <Column Name="maThe" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="maKhoa" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="maLop" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="hoTen" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="ngaySinh" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="gioiTinh" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="diaChi" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="phone" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="email" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="trinhDo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="khoaHoc" Type="System.String" DbType="Char(15)" CanBeNull="true" />
+      <Association Name="tbl_doc_gia_tbl_muon_tra" Member="tbl_muon_tras" ThisKey="maThe" OtherKey="maThe" Type="tbl_muon_tra" />
+      <Association Name="tbl_khoa_tbl_doc_gia" Member="tbl_khoa" ThisKey="maKhoa" OtherKey="maKhoa" Type="tbl_khoa" IsForeignKey="true" />
+      <Association Name="tbl_lop_tbl_doc_gia" Member="tbl_lop" ThisKey="maLop" OtherKey="maLop" Type="tbl_lop" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbl_kho_sach" Member="tbl_kho_saches">
+    <Type Name="tbl_kho_sach">
+      <Column Name="maKho" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="tenKho" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ghiChu" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Association Name="tbl_kho_sach_tbl_sach" Member="tbl_saches" ThisKey="maKho" OtherKey="maKho" Type="tbl_sach" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbl_khoa" Member="tbl_khoas">
+    <Type Name="tbl_khoa">
+      <Column Name="maKhoa" Type="System.String" DbType="Char(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="tenKhoa" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="diaChi" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SDT" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="email" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="truongKhoa" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Association Name="tbl_khoa_tbl_doc_gia" Member="tbl_doc_gias" ThisKey="maKhoa" OtherKey="maKhoa" Type="tbl_doc_gia" />
+      <Association Name="tbl_khoa_tbl_lop" Member="tbl_lops" ThisKey="maKhoa" OtherKey="maKhoa" Type="tbl_lop" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbl_lop" Member="tbl_lops">
+    <Type Name="tbl_lop">
+      <Column Name="maLop" Type="System.String" DbType="Char(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="maKhoa" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="tenLop" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="chuNhiem" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="tbl_lop_tbl_doc_gia" Member="tbl_doc_gias" ThisKey="maLop" OtherKey="maLop" Type="tbl_doc_gia" />
+      <Association Name="tbl_khoa_tbl_lop" Member="tbl_khoa" ThisKey="maKhoa" OtherKey="maKhoa" Type="tbl_khoa" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbl_muon_tra" Member="tbl_muon_tras">
+    <Type Name="tbl_muon_tra">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="maThe" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ngayTao" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="tbl_muon_tra_tbl_chi_tiet_muon" Member="tbl_chi_tiet_muons" ThisKey="ID" OtherKey="maCanBo" Type="tbl_chi_tiet_muon" />
+      <Association Name="tbl_muon_tra_tbl_chi_tiet_tra" Member="tbl_chi_tiet_tras" ThisKey="ID" OtherKey="maCanBo" Type="tbl_chi_tiet_tra" />
+      <Association Name="tbl_doc_gia_tbl_muon_tra" Member="tbl_doc_gia" ThisKey="maThe" OtherKey="maThe" Type="tbl_doc_gia" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbl_NXB" Member="tbl_NXBs">
+    <Type Name="tbl_NXB">
+      <Column Name="maNXB" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="tenNXB" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="phone" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="email" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="diaChi" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="ghiChu" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="tbl_NXB_tbl_sach" Member="tbl_saches" ThisKey="maNXB" OtherKey="maNXB" Type="tbl_sach" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbl_sach" Member="tbl_saches">
+    <Type Name="tbl_sach">
+      <Column Name="maSach" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="maTheLoai" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="maKho" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="maNXB" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="tenSach" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="tenTacGia" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="soLuong" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="giaTien" Type="System.Single" DbType="Real" CanBeNull="true" />
+      <Column Name="moTa" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="tbl_sach_tbl_chi_tiet_muon" Member="tbl_chi_tiet_muons" ThisKey="maSach" OtherKey="maSach" Type="tbl_chi_tiet_muon" />
+      <Association Name="tbl_sach_tbl_chi_tiet_tra" Member="tbl_chi_tiet_tras" ThisKey="maSach" OtherKey="maSach" Type="tbl_chi_tiet_tra" />
+      <Association Name="tbl_kho_sach_tbl_sach" Member="tbl_kho_sach" ThisKey="maKho" OtherKey="maKho" Type="tbl_kho_sach" IsForeignKey="true" />
+      <Association Name="tbl_NXB_tbl_sach" Member="tbl_NXB" ThisKey="maNXB" OtherKey="maNXB" Type="tbl_NXB" IsForeignKey="true" />
+      <Association Name="tbl_the_loai_sach_tbl_sach" Member="tbl_the_loai_sach" ThisKey="maTheLoai" OtherKey="maTheLoai" Type="tbl_the_loai_sach" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
